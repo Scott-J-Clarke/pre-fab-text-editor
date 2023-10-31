@@ -1,0 +1,9 @@
+node_modules/
+dist/
+/node_modules
+npm-debug.log
+.DS_Store
+/*.env
+
+# Ignore .npmrc files
+.npmrc

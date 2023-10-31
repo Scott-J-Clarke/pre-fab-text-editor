@@ -1,7 +1,7 @@
 {
   "name": "JATE",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a single-page text editor that runs in the browser and can function offline.",
   "main": "server.js",
   "scripts": {
     "start:dev": "",
