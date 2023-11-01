@@ -1,9 +1,6 @@
-// Where/How do I import 'CSS loaders'?
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
-// In the content of 'workbox-webpack-plugin', { InjectManifest } will make a service worker for the app.
-// What am I meant to do with 'InjectManifest'?
 const { InjectManifest } = require('workbox-webpack-plugin');
 
 module.exports = () => {
@@ -17,55 +14,56 @@ module.exports = () => {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
     },
-    // This whole 'plugins' section is copied from Activity 26:
     plugins: [
       new HtmlWebpackPlugin({
-        template: './index.html', // Is this right?
-        title: 'TODOs List' // This doesn't seem right because 'TODOs List' was Activity 26 title (?).
+        template: './index.html',
+        title: 'JATE'
       }),
 
-      new GenerateSW(),
+      // Making 'service worker' is last task to do:
+      // new InjectManifest({
+      //   swSrc: './src-sw.js',
+      //   swDest: 'src-sw.js'
+      // }),
+
       new WebpackPwaManifest({
-        name: 'My Progressive Web App',
-        short_name: 'MyPWA',
-        description: 'My awesome Progressive Web App!',
-        background_color: '#ffffff',
-        crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
+        fingerprints: false,
+        inject: true,
+        name: 'Just Another Text Editor',
+        short_name: 'J.A.T.E',
+        description: "This application installs 'Just Another Text Editor' or 'JATE' for short.",
+        background_color: '#225ca3',
+        theme_color: '#225ca3',
+        start_url: '/',
+        publicPath: '/',
         icons: [
           {
-            src: path.resolve('assets/images/logo.png'),
-            sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
-            
+            src: path.resolve('src/images/logo.png'),
+            sizes: [96, 128, 192, 256, 384, 512], // Multiple image sizes
+            destination: path.join('assets', 'icons'),
           }
         ]
       }),
     ],
 
-    // Added 'babel' to 'webpack.config.js':
-    module: {
-      rules: [
-        {
-          test: /\.(?:js|mjs|cjs)$/,
-          exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              presets: [
-                ['@babel/preset-env', { targets: "defaults" }]
-              ]
-            }
-          }
-        }
-      ],
-    },
-    // Added 'CSS loaders' to 'webpack.config.js': 
+    // Added 'CSS loader' and 'babel':
     module: {
       rules: [
         {
           test: /\.css$/i,
           use: ["style-loader", "css-loader"],
         },
+        {
+          test: /\.m?js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+              plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/transform-runtime'],
+            }}
+        }
       ],
-    },
+    }
   };
 };
