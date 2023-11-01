@@ -1,11 +1,9 @@
 node_modules/
 dist/
-/node_modules
+client/dist
 npm-debug.log
 .DS_Store
 /*.env
-
-# Ignore .npmrc files
 .npmrc
-
 package-lock.json
+.DS_Store
