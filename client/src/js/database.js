@@ -25,12 +25,13 @@ export const putDb = async (content) => {
 
 // Method that gets all the content from the database:
 export const getDb = async () => {
-  const txtEditorDB = await openDB('jate', 'readonly');
+  const txtEditorDB = await openDB('jate', 1);
+  const transVar = txtEditorDB.transaction('jate', 'readonly');
   const storeVar = transVar.objectStore('jate');
-  const request = storeVar.get(1);
+  const request = storeVar.getAll();
   const result = await request;
   result
-    ? console.log('Data retrieved from the database', result.value)
+    ? console.log('Data retrieved from the database', result)
     : console.log('Data not found in the database');
 };
 
