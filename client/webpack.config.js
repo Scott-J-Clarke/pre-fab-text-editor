@@ -21,10 +21,10 @@ module.exports = () => {
       }),
 
       // Making 'service worker' is last task to do:
-      // new InjectManifest({
-      //   swSrc: './src-sw.js',
-      //   swDest: 'src-sw.js'
-      // }),
+      new InjectManifest({
+        swSrc: './src-sw.js',
+        swDest: 'src-sw.js'
+      }),
 
       new WebpackPwaManifest({
         fingerprints: false,
